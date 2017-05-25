@@ -15,10 +15,10 @@ return [
 	'version' => '1.0.0',
 	'type' => 'licenses',
 	'hooks' => [
-		'function.requirements' => ['Detain\MyAdminParallels\Plugin', 'Requirements'],
+		/* 'function.requirements' => ['Detain\MyAdminParallels\Plugin', 'Requirements'],
 		'licenses.settings' => ['Detain\MyAdminParallels\Plugin', 'Settings'],
 		'licenses.activate' => ['Detain\MyAdminParallels\Plugin', 'Activate'],
 		'licenses.change_ip' => ['Detain\MyAdminParallels\Plugin', 'ChangeIp'],
-		'ui.menu' => ['Detain\MyAdminParallels\Plugin', 'Menu']
+		'ui.menu' => ['Detain\MyAdminParallels\Plugin', 'Menu'] */
 	],
 ];
