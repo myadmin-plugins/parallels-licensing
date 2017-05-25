@@ -10,8 +10,8 @@ return [
 	'help' => 'Professional control panel that gives web-designers, web-masters and website owners tools to manage their servers, sites and applications. The only hosting solution that will grow with your business from a single site and servers to a multi-server cloud solution and millions of users. The professionals choice for growing businesses.',
 	'module' => 'licenses',
 	'author' => 'detain@interserver.net',
-	'home' => 'https://github.com/detain/myadmin-parallels',
-	'repo' => 'https://github.com/detain/myadmin-parallels',
+	'home' => 'https://github.com/detain/myadmin-parallels-licensing',
+	'repo' => 'https://github.com/detain/myadmin-parallels-licensing',
 	'version' => '1.0.0',
 	'type' => 'licenses',
 	'hooks' => [
