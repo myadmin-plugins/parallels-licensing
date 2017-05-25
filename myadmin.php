@@ -6,8 +6,8 @@
 */
 return [
 	'name' => 'Parallels Licensing',
-	'description' => 'Allows selling of Parallels Server and VPS License Types.  More info at https://www.netenberg.com/parallels.php',
-	'help' => 'It provides more than one million end users the ability to quickly install dozens of the leading open source content management systems into their web space.  	Must have a pre-existing cPanel license with cPanelDirect to purchase a parallels license. Allow 10 minutes for activation.',
+	'description' => 'Allows selling of Parallels Server and VPS License Types.  More info at https://parallels.com',
+	'help' => 'Professional control panel that gives web-designers, web-masters and website owners tools to manage their servers, sites and applications. The only hosting solution that will grow with your business from a single site and servers to a multi-server cloud solution and millions of users. The professionals choice for growing businesses.',
 	'module' => 'licenses',
 	'author' => 'detain@interserver.net',
 	'home' => 'https://github.com/detain/myadmin-parallels',
