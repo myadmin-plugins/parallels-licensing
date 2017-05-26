@@ -29,7 +29,7 @@ class Plugin {
 	}
 
 	public static function ChangeIp(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
+		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
 			$license = $event->getSubject();
 			$settings = get_module_settings('licenses');
 			$parallels = new \Parallels(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
