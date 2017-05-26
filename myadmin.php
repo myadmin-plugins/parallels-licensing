@@ -16,8 +16,8 @@ return [
 	'type' => 'licenses',
 	'hooks' => [
 		'licenses.settings' => ['Detain\MyAdminParallels\Plugin', 'Settings'],
-		/* 'function.requirements' => ['Detain\MyAdminParallels\Plugin', 'Requirements'],
 		'licenses.activate' => ['Detain\MyAdminParallels\Plugin', 'Activate'],
+		/* 'function.requirements' => ['Detain\MyAdminParallels\Plugin', 'Requirements'],
 		'licenses.change_ip' => ['Detain\MyAdminParallels\Plugin', 'ChangeIp'],
 		'ui.menu' => ['Detain\MyAdminParallels\Plugin', 'Menu'] */
 	],

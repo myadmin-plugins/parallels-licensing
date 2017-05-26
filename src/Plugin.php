@@ -13,10 +13,17 @@ class Plugin {
 	public static function Activate(GenericEvent $event) {
 		// will be executed when the licenses.license event is dispatched
 		$license = $event->getSubject();
-		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
+		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
 			myadmin_log('licenses', 'info', 'Parallels Activation', __LINE__, __FILE__);
 			function_requirements('activate_parallels');
-			activate_parallels($license->get_ip(), $event['field1']);
+			if (trim($event['field2']) != '') {
+				$response = activate_parallels($license->get_ip(), $event['field1'], $event['field2']);
+			} else {
+				$response = activate_parallels($license->get_ip(), $event['field1']);
+			}
+			myadmin_log('licenses', 'info', 'Response: ' . json_encode($response), __LINE__, __FILE__);
+			$license_extra = $response['mainKeyNumber'] . ',' . $response['productKey'];
+			$license->set_extra($license_extra)->save();
 			$event->stopPropagation();
 		}
 	}
