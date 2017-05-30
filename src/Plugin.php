@@ -66,7 +66,7 @@ class Plugin {
 		if ($GLOBALS['tf']->ima == 'admin') {
 			$menu->add_link($module, 'choice=none.reusable_parallels', 'icons/database_warning_48.png', 'ReUsable Parallels Licenses');
 			$menu->add_link($module, 'choice=none.parallels_list', 'icons/database_warning_48.png', 'Parallels Licenses Breakdown');
-			$menu->add_link('licensesapi', 'choice=none.parallels_licenses_list', 'whm/createacct.gif', 'List all Parallels Licenses');
+			$menu->add_link($module.'api', 'choice=none.parallels_licenses_list', 'whm/createacct.gif', 'List all Parallels Licenses');
 		}
 	}
 
