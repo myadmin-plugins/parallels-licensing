@@ -18,8 +18,8 @@ return [
 		'licenses.settings' => ['Detain\MyAdminParallels\Plugin', 'Settings'],
 		'licenses.activate' => ['Detain\MyAdminParallels\Plugin', 'Activate'],
 		'licenses.deactivate' => ['Detain\MyAdminParallels\Plugin', 'Deactivate'],
-		/* 'function.requirements' => ['Detain\MyAdminParallels\Plugin', 'Requirements'],
+		'function.requirements' => ['Detain\MyAdminParallels\Plugin', 'Requirements'],
 		'licenses.change_ip' => ['Detain\MyAdminParallels\Plugin', 'ChangeIp'],
-		'ui.menu' => ['Detain\MyAdminParallels\Plugin', 'Menu'] */
+		/* 'ui.menu' => ['Detain\MyAdminParallels\Plugin', 'Menu'] */
 	],
 ];

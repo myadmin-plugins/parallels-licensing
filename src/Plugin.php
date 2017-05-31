@@ -64,27 +64,15 @@ class Plugin {
 		$menu = $event->getSubject();
 		$module = 'licenses';
 		if ($GLOBALS['tf']->ima == 'admin') {
-			$menu->add_link($module, 'choice=none.reusable_parallels', 'icons/database_warning_48.png', 'ReUsable Parallels Licenses');
-			$menu->add_link($module, 'choice=none.parallels_list', 'icons/database_warning_48.png', 'Parallels Licenses Breakdown');
-			$menu->add_link($module.'api', 'choice=none.parallels_licenses_list', 'whm/createacct.gif', 'List all Parallels Licenses');
+			//$menu->add_link($module.'api', 'choice=none.parallels_licenses_list', 'whm/createacct.gif', 'List all Parallels Licenses');
 		}
 	}
 
 	public static function Requirements(GenericEvent $event) {
 		// will be executed when the licenses.loader event is dispatched
 		$loader = $event->getSubject();
-		$loader->add_requirement('crud_parallels_list', '/../vendor/detain/crud/src/crud/crud_parallels_list.php');
-		$loader->add_requirement('crud_reusable_parallels', '/../vendor/detain/crud/src/crud/crud_reusable_parallels.php');
-		$loader->add_requirement('get_parallels_licenses', '/licenses/parallels.functions.inc.php');
-		$loader->add_requirement('get_parallels_list', '/licenses/parallels.functions.inc.php');
-		$loader->add_requirement('parallels_licenses_list', '/licenses/parallels.functions.inc.php');
-		$loader->add_requirement('parallels_list', '/licenses/parallels.functions.inc.php');
-		$loader->add_requirement('get_available_parallels', '/licenses/parallels.functions.inc.php');
-		$loader->add_requirement('activate_parallels', '/licenses/parallels.functions.inc.php');
-		$loader->add_requirement('get_reusable_parallels', '/licenses/parallels.functions.inc.php');
-		$loader->add_requirement('reusable_parallels', '/licenses/parallels.functions.inc.php');
-		$loader->add_requirement('class.parallels', '/../vendor/detain/parallels/class.parallels.inc.php');
-		$loader->add_requirement('vps_add_parallels', '/vps/addons/vps_add_parallels.php');
+		$loader->add_requirement('activate_parallels', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
+		$loader->add_requirement('deactivate_parallels', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
 	}
 
 	public static function Settings(GenericEvent $event) {
