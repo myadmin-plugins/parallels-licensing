@@ -71,6 +71,7 @@ class Plugin {
 	public static function Requirements(GenericEvent $event) {
 		// will be executed when the licenses.loader event is dispatched
 		$loader = $event->getSubject();
+		$loader->add_requirement('class.Parallels', '/../vendor/detain/parallels-licensing/src/Parallels.php');
 		$loader->add_requirement('activate_parallels', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
 		$loader->add_requirement('deactivate_parallels', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
 	}
