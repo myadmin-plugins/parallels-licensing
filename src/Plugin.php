@@ -79,10 +79,10 @@ class Plugin {
 	public static function Settings(GenericEvent $event) {
 		// will be executed when the licenses.settings event is dispatched
 		$settings = $event->getSubject();
-		$settings->add_text_setting('apisettings', 'parallels_ka_client', 'Parallels KA Client:', 'Parallels KA Client', $settings->get_setting('PARALLELS_KA_CLIENT'));
-		$settings->add_text_setting('apisettings', 'parallels_ka_login', 'Parallels KA Login:', 'Parallels KA Login', $settings->get_setting('PARALLELS_KA_LOGIN'));
-		$settings->add_text_setting('apisettings', 'parallels_ka_password', 'Parallels KA Password:', 'Parallels KA Password', $settings->get_setting('PARALLELS_KA_PASSWORD'));
-		$settings->add_text_setting('apisettings', 'parallels_ka_url', 'Parallels KA URL:', 'Parallels KA URL', $settings->get_setting('PARALLELS_KA_URL'));
+		$settings->add_text_setting('licenses', 'apisettings', 'parallels_ka_client', 'Parallels KA Client:', 'Parallels KA Client', $settings->get_setting('PARALLELS_KA_CLIENT'));
+		$settings->add_text_setting('licenses', 'apisettings', 'parallels_ka_login', 'Parallels KA Login:', 'Parallels KA Login', $settings->get_setting('PARALLELS_KA_LOGIN'));
+		$settings->add_text_setting('licenses', 'apisettings', 'parallels_ka_password', 'Parallels KA Password:', 'Parallels KA Password', $settings->get_setting('PARALLELS_KA_PASSWORD'));
+		$settings->add_text_setting('licenses', 'apisettings', 'parallels_ka_url', 'Parallels KA URL:', 'Parallels KA URL', $settings->get_setting('PARALLELS_KA_URL'));
 		$settings->add_dropdown_setting('stock', 'outofstock_licenses_parallels', 'Out Of Stock Parallels Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), array('0', '1'), array('No', 'Yes', ));
 	}
 
