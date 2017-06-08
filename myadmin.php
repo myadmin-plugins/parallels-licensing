@@ -13,7 +13,7 @@ return [
 	'home' => 'https://github.com/detain/myadmin-parallels-licensing',
 	'repo' => 'https://github.com/detain/myadmin-parallels-licensing',
 	'version' => '1.0.0',
-	'type' => 'licenses',
+	'type' => 'service',
 	'hooks' => [
 		'licenses.settings' => ['Detain\MyAdminParallels\Plugin', 'Settings'],
 		'licenses.activate' => ['Detain\MyAdminParallels\Plugin', 'Activate'],
