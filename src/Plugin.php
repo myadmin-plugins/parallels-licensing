@@ -7,7 +7,23 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Plugin {
 
+	public static $name = 'Parallels Licensing';
+	public static $description = 'Allows selling of Parallels Server and VPS License Types.  More info at https://parallels.com';
+	public static $help = 'Professional control panel that gives web-designers, web-masters and website owners tools to manage their servers, sites and applications. The only hosting solution that will grow with your business from a single site and servers to a multi-server cloud solution and millions of users. The professionals choice for growing businesses.';
+	public static $module = 'licenses';
+	public static $type = 'service';
+
+
 	public function __construct() {
+	}
+
+	public static function Hooks() {
+		return [
+			'licenses.settings' => ['Detain\MyAdminParallels\Plugin', 'Settings'],
+			'licenses.activate' => ['Detain\MyAdminParallels\Plugin', 'Activate'],
+			'licenses.deactivate' => ['Detain\MyAdminParallels\Plugin', 'Deactivate'],
+			'function.requirements' => ['Detain\MyAdminParallels\Plugin', 'Requirements'],
+		];
 	}
 
 	public static function Activate(GenericEvent $event) {
