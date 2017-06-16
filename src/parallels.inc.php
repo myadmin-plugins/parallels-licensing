@@ -30,7 +30,7 @@ function activate_parallels($ip, $type, $addons = '') {
 	ini_set('default_socket_timeout', 1000); // same
 	$db = get_module_db('licenses');
 	$settings = get_module_settings('licenses');
-	$parallels = new Parallels();
+	$parallels = new \Detain\Parallels\Parallels();
 	if (trim($addons) == '')
 		$a_addons = [];
 	else
@@ -79,7 +79,7 @@ function activate_parallels($ip, $type, $addons = '') {
 function deactivate_parallels($ip) {
 	myadmin_log('licenses', 'info', "Parallels Deactivation ({$ip})", __LINE__, __FILE__);
 	function_requirements('class.Parallels');
-	$parallels = new Parallels();
+	$parallels = new \Detain\Parallels\Parallels();
 	$key = $parallels->getMainKeyFromIp($ip);
 	request_log('licenses', false, __FUNCTION__, 'parallels', 'getMainKeyFromIp', $ip, $key);
 	myadmin_log('licenses', 'info', "Parallels getMainKeyFromIp({$ip}) = {$key} Raw Response: " . json_encode($parallels->response), __LINE__, __FILE__);

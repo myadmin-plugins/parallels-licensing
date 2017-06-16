@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../../../include/functions.inc.php');
 
 $Key = 'PLSK.03117920.0000';
 $ip = '206.72.205.242';
-$ka = new Parallels();
+$ka = new \Detain\Parallels\Parallels();
 print_r($ka->getKeyInfo($Key));
 
 //$GLOBALS['tf']->session->destroy();
