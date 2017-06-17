@@ -43,7 +43,7 @@ function activate_parallels($ip, $type, $addons = '') {
 	$request = array($type, $a_addons, $ip);
 	$response = $parallels->createKey($type, $a_addons, $ip);
 	request_log('licenses', false, __FUNCTION__, 'parallels', 'createKey', $request, $response);
-	myadmin_log('licenses', 'info', "Activate Parallels({$ip}, {$type}, {$addons}) Response: " . json_encode($response), __LINE__, __FILE__);
+	myadmin_log('licenses', 'info', "Activate Parallels({$ip}, {$type}, {$addons}) Response: ".json_encode($response), __LINE__, __FILE__);
 	/* example response:
 	Array(
 	[mainKeyNumber] => PLSK.00007677.0000
@@ -82,11 +82,11 @@ function deactivate_parallels($ip) {
 	$parallels = new \Detain\Parallels\Parallels();
 	$key = $parallels->getMainKeyFromIp($ip);
 	request_log('licenses', false, __FUNCTION__, 'parallels', 'getMainKeyFromIp', $ip, $key);
-	myadmin_log('licenses', 'info', "Parallels getMainKeyFromIp({$ip}) = {$key} Raw Response: " . json_encode($parallels->response), __LINE__, __FILE__);
+	myadmin_log('licenses', 'info', "Parallels getMainKeyFromIp({$ip}) = {$key} Raw Response: ".json_encode($parallels->response), __LINE__, __FILE__);
 	if ($key !== false) {
 		$response = $parallels->terminateKey($key);
 		request_log('licenses', false, __FUNCTION__, 'parallels', 'terminateKey', $key, $response);
-		myadmin_log('licenses', 'info', "Parallels TerminateKey({$key}) Response: " . json_encode($response), __LINE__, __FILE__);
+		myadmin_log('licenses', 'info', "Parallels TerminateKey({$key}) Response: ".json_encode($response), __LINE__, __FILE__);
 	} else {
 		myadmin_log('licenses', 'info', 'Parallels No Key Found to Terminate', __LINE__, __FILE__);
 	}
