@@ -43,7 +43,7 @@ function activate_parallels($ip, $type, $addons = '') {
 	$request = array($type, $a_addons, $ip);
 	$response = $parallels->createKey($type, $a_addons, $ip);
 	request_log('licenses', false, __FUNCTION__, 'parallels', 'createKey', $request, $response);
-	myadmin_log('licenses', 'info', "Activate Parallels({$ip}, {$type}, {$addons}) Response: ".json_encode($response), __LINE__, __FILE__);
+	myadmin_log('licenses', 'info', "activate Parallels({$ip}, {$type}, {$addons}) Response: ".json_encode($response), __LINE__, __FILE__);
 	/* example response:
 	Array(
 	[mainKeyNumber] => PLSK.00007677.0000
