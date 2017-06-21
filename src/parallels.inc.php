@@ -18,14 +18,14 @@
 
 /**
  * activate_parallels()
- * @param mixed  $ip
+ * @param mixed  $ipAddress
  * @param mixed  $type
  * @param string $addons
  * @return mixed
  */
-function activate_parallels($ip, $type, $addons = '') {
+function activate_parallels($ipAddress, $type, $addons = '') {
 	function_requirements('class.Parallels');
-	myadmin_log('licenses', 'info', "Parallels New License $ip Type $type Addons $addons called", __LINE__, __FILE__);
+	myadmin_log('licenses', 'info', "Parallels New License $ipAddress Type $type Addons $addons called", __LINE__, __FILE__);
 	ini_set('max_execution_time', 1000); // just put a lot of time
 	ini_set('default_socket_timeout', 1000); // same
 	$db = get_module_db('licenses');
@@ -40,10 +40,10 @@ function activate_parallels($ip, $type, $addons = '') {
 	// check if already active
 	myadmin_log('licenses', 'info', 'a_addons:', __LINE__, __FILE__);
 	myadmin_log('licenses', 'info', var_export($a_addons, true), __LINE__, __FILE__);
-	$request = array($type, $a_addons, $ip);
-	$response = $parallels->createKey($type, $a_addons, $ip);
+	$request = array($type, $a_addons, $ipAddress);
+	$response = $parallels->createKey($type, $a_addons, $ipAddress);
 	request_log('licenses', false, __FUNCTION__, 'parallels', 'createKey', $request, $response);
-	myadmin_log('licenses', 'info', "activate Parallels({$ip}, {$type}, {$addons}) Response: ".json_encode($response), __LINE__, __FILE__);
+	myadmin_log('licenses', 'info', "activate Parallels({$ipAddress}, {$type}, {$addons}) Response: ".json_encode($response), __LINE__, __FILE__);
 	/* example response:
 	Array(
 	[mainKeyNumber] => PLSK.00007677.0000
@@ -74,15 +74,15 @@ function activate_parallels($ip, $type, $addons = '') {
 }
 
 /**
-* @param $ip
+* @param $ipAddress
 */
-function deactivate_parallels($ip) {
-	myadmin_log('licenses', 'info', "Parallels Deactivation ({$ip})", __LINE__, __FILE__);
+function deactivate_parallels($ipAddress) {
+	myadmin_log('licenses', 'info', "Parallels Deactivation ({$ipAddress})", __LINE__, __FILE__);
 	function_requirements('class.Parallels');
 	$parallels = new \Detain\Parallels\Parallels();
-	$key = $parallels->getMainKeyFromIp($ip);
-	request_log('licenses', false, __FUNCTION__, 'parallels', 'getMainKeyFromIp', $ip, $key);
-	myadmin_log('licenses', 'info', "Parallels getMainKeyFromIp({$ip}) = {$key} Raw Response: ".json_encode($parallels->response), __LINE__, __FILE__);
+	$key = $parallels->getMainKeyFromIp($ipAddress);
+	request_log('licenses', false, __FUNCTION__, 'parallels', 'getMainKeyFromIp', $ipAddress, $key);
+	myadmin_log('licenses', 'info', "Parallels getMainKeyFromIp({$ipAddress}) = {$key} Raw Response: ".json_encode($parallels->response), __LINE__, __FILE__);
 	if ($key !== false) {
 		$response = $parallels->terminateKey($key);
 		request_log('licenses', false, __FUNCTION__, 'parallels', 'terminateKey', $key, $response);
