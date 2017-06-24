@@ -19,9 +19,9 @@ class Plugin {
 
 	public static function getHooks() {
 		return [
-			'licenses.settings' => [__CLASS__, 'getSettings'],
-			'licenses.activate' => [__CLASS__, 'getActivate'],
-			'licenses.deactivate' => [__CLASS__, 'Deactivate'],
+			self::$module.'.settings' => [__CLASS__, 'getSettings'],
+			self::$module.'.activate' => [__CLASS__, 'getActivate'],
+			self::$module.'.deactivate' => [__CLASS__, 'Deactivate'],
 			'function.requirements' => [__CLASS__, 'getRequirements'],
 		];
 	}
