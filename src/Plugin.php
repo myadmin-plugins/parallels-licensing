@@ -27,7 +27,6 @@ class Plugin {
 	}
 
 	public static function Activate(GenericEvent $event) {
-		// will be executed when the licenses.license event is dispatched
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
 			myadmin_log('licenses', 'info', 'Parallels Activation', __LINE__, __FILE__);
@@ -76,7 +75,6 @@ class Plugin {
 	}
 
 	public static function getMenu(GenericEvent $event) {
-		// will be executed when the licenses.settings event is dispatched
 		$menu = $event->getSubject();
 		$module = 'licenses';
 		if ($GLOBALS['tf']->ima == 'admin') {
@@ -85,7 +83,6 @@ class Plugin {
 	}
 
 	public static function getRequirements(GenericEvent $event) {
-		// will be executed when the licenses.loader event is dispatched
 		$loader = $event->getSubject();
 		$loader->add_requirement('class.Parallels', '/../vendor/detain/parallels-licensing/src/Parallels.php');
 		$loader->add_requirement('activate_parallels', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
@@ -93,7 +90,6 @@ class Plugin {
 	}
 
 	public static function getSettings(GenericEvent $event) {
-		// will be executed when the licenses.settings event is dispatched
 		$settings = $event->getSubject();
 		$settings->add_text_setting('licenses', 'Parallels', 'parallels_ka_client', 'Parallels KA Client:', 'Parallels KA Client', $settings->get_setting('PARALLELS_KA_CLIENT'));
 		$settings->add_text_setting('licenses', 'Parallels', 'parallels_ka_login', 'Parallels KA Login:', 'Parallels KA Login', $settings->get_setting('PARALLELS_KA_LOGIN'));
