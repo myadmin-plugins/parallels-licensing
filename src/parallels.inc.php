@@ -29,19 +29,17 @@ function activate_parallels($ipAddress, $type, $addons = '') {
 	ini_set('max_execution_time', 1000); // just put a lot of time
 	ini_set('default_socket_timeout', 1000); // same
 	$db = get_module_db('licenses');
-	$settings = get_module_settings('licenses');
 	$parallels = new \Detain\Parallels\Parallels();
 	if (trim($addons) == '')
-		$a_addons = [];
+		$addonsArray = [];
 	else
-		$a_addons = explode(',', $addons);
+		$addonsArray = explode(',', $addons);
 
-	// TODO
 	// check if already active
-	myadmin_log('licenses', 'info', 'a_addons:', __LINE__, __FILE__);
-	myadmin_log('licenses', 'info', var_export($a_addons, true), __LINE__, __FILE__);
-	$request = array($type, $a_addons, $ipAddress);
-	$response = $parallels->createKey($type, $a_addons, $ipAddress);
+	myadmin_log('licenses', 'info', 'addonsArray:', __LINE__, __FILE__);
+	myadmin_log('licenses', 'info', var_export($addonsArray, true), __LINE__, __FILE__);
+	$request = array($type, $addonsArray, $ipAddress);
+	$response = $parallels->createKey($type, $addonsArray, $ipAddress);
 	request_log('licenses', false, __FUNCTION__, 'parallels', 'createKey', $request, $response);
 	myadmin_log('licenses', 'info', "activate Parallels({$ipAddress}, {$type}, {$addons}) Response: ".json_encode($response), __LINE__, __FILE__);
 	/* example response:
