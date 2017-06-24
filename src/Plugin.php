@@ -29,14 +29,14 @@ class Plugin {
 	public static function getActivate(GenericEvent $event) {
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
-			myadmin_log('licenses', 'info', 'Parallels Activation', __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'Parallels Activation', __LINE__, __FILE__);
 			function_requirements('activate_parallels');
 			if (trim($event['field2']) != '') {
 				$response = activate_parallels($license->get_ip(), $event['field1'], $event['field2']);
 			} else {
 				$response = activate_parallels($license->get_ip(), $event['field1']);
 			}
-			myadmin_log('licenses', 'info', 'Response: '.json_encode($response), __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'Response: '.json_encode($response), __LINE__, __FILE__);
 			$serviceExtra = $response['mainKeyNumber'].','.$response['productKey'];
 			$license->set_extra($serviceExtra)->save();
 			$event->stopPropagation();
@@ -46,7 +46,7 @@ class Plugin {
 	public static function getgetDeactivate(GenericEvent $event) {
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
-			myadmin_log('licenses', 'info', 'Parallels Deactivation', __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'Parallels Deactivation', __LINE__, __FILE__);
 			function_requirements('deactivate_parallels');
 			deactivate_parallels($license->get_ip());
 			$event->stopPropagation();
@@ -56,12 +56,12 @@ class Plugin {
 	public static function getChangeIp(GenericEvent $event) {
 		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
 			$license = $event->getSubject();
-			$settings = get_module_settings('licenses');
+			$settings = get_module_settings(self::$module);
 			$parallels = new \Parallels(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
-			myadmin_log('licenses', 'info', "IP Change - (OLD:".$license->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$license->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
 			$result = $parallels->editIp($license->get_ip(), $event['newip']);
 			if (isset($result['faultcode'])) {
-				myadmin_log('licenses', 'error', 'Parallels editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
+				myadmin_log(self::$module, 'error', 'Parallels editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
 				$event['status'] = 'error';
 				$event['status_text'] = 'Error Code '.$result['faultcode'].': '.$result['fault'];
 			} else {
@@ -76,9 +76,8 @@ class Plugin {
 
 	public static function getMenu(GenericEvent $event) {
 		$menu = $event->getSubject();
-		$module = 'licenses';
 		if ($GLOBALS['tf']->ima == 'admin') {
-			//$menu->add_link($module.'api', 'choice=none.parallels_licenses_list', 'whm/createacct.gif', 'List all Parallels Licenses');
+			//$menu->add_link(self::$module.'api', 'choice=none.parallels_licenses_list', 'whm/createacct.gif', 'List all Parallels Licenses');
 		}
 	}
 
@@ -91,11 +90,11 @@ class Plugin {
 
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
-		$settings->add_text_setting('licenses', 'Parallels', 'parallels_ka_client', 'Parallels KA Client:', 'Parallels KA Client', $settings->get_setting('PARALLELS_KA_CLIENT'));
-		$settings->add_text_setting('licenses', 'Parallels', 'parallels_ka_login', 'Parallels KA Login:', 'Parallels KA Login', $settings->get_setting('PARALLELS_KA_LOGIN'));
-		$settings->add_text_setting('licenses', 'Parallels', 'parallels_ka_password', 'Parallels KA Password:', 'Parallels KA Password', $settings->get_setting('PARALLELS_KA_PASSWORD'));
-		$settings->add_text_setting('licenses', 'Parallels', 'parallels_ka_url', 'Parallels KA URL:', 'Parallels KA URL', $settings->get_setting('PARALLELS_KA_URL'));
-		$settings->add_dropdown_setting('licenses', 'Parallels', 'outofstock_licenses_parallels', 'Out Of Stock Parallels Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), array('0', '1'), array('No', 'Yes',));
+		$settings->add_text_setting(self::$module, 'Parallels', 'parallels_ka_client', 'Parallels KA Client:', 'Parallels KA Client', $settings->get_setting('PARALLELS_KA_CLIENT'));
+		$settings->add_text_setting(self::$module, 'Parallels', 'parallels_ka_login', 'Parallels KA Login:', 'Parallels KA Login', $settings->get_setting('PARALLELS_KA_LOGIN'));
+		$settings->add_text_setting(self::$module, 'Parallels', 'parallels_ka_password', 'Parallels KA Password:', 'Parallels KA Password', $settings->get_setting('PARALLELS_KA_PASSWORD'));
+		$settings->add_text_setting(self::$module, 'Parallels', 'parallels_ka_url', 'Parallels KA URL:', 'Parallels KA URL', $settings->get_setting('PARALLELS_KA_URL'));
+		$settings->add_dropdown_setting(self::$module, 'Parallels', 'outofstock_licenses_parallels', 'Out Of Stock Parallels Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), array('0', '1'), array('No', 'Yes',));
 	}
 
 }
