@@ -38,8 +38,8 @@ class Plugin {
 				$response = activate_parallels($license->get_ip(), $event['field1']);
 			}
 			myadmin_log('licenses', 'info', 'Response: '.json_encode($response), __LINE__, __FILE__);
-			$license_extra = $response['mainKeyNumber'].','.$response['productKey'];
-			$license->set_extra($license_extra)->save();
+			$serviceExtra = $response['mainKeyNumber'].','.$response['productKey'];
+			$license->set_extra($serviceExtra)->save();
 			$event->stopPropagation();
 		}
 	}
