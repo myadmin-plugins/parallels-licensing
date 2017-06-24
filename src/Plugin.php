@@ -21,7 +21,7 @@ class Plugin {
 		return [
 			self::$module.'.settings' => [__CLASS__, 'getSettings'],
 			self::$module.'.activate' => [__CLASS__, 'getActivate'],
-			self::$module.'.deactivate' => [__CLASS__, 'Deactivate'],
+			self::$module.'.deactivate' => [__CLASS__, 'getDeactivate'],
 			'function.requirements' => [__CLASS__, 'getRequirements'],
 		];
 	}
@@ -43,7 +43,7 @@ class Plugin {
 		}
 	}
 
-	public static function Deactivate(GenericEvent $event) {
+	public static function getgetDeactivate(GenericEvent $event) {
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
 			myadmin_log('licenses', 'info', 'Parallels Deactivation', __LINE__, __FILE__);
