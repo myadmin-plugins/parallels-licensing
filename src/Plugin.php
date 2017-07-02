@@ -28,46 +28,46 @@ class Plugin {
 	}
 
 	public static function getActivate(GenericEvent $event) {
-		$license = $event->getSubject();
+		$serviceClass = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
 			myadmin_log(self::$module, 'info', 'Parallels Activation', __LINE__, __FILE__);
 			function_requirements('activate_parallels');
 			if (trim($event['field2']) != '') {
-				$response = activate_parallels($license->get_ip(), $event['field1'], $event['field2']);
+				$response = activate_parallels($serviceClass->get_ip(), $event['field1'], $event['field2']);
 			} else {
-				$response = activate_parallels($license->get_ip(), $event['field1']);
+				$response = activate_parallels($serviceClass->get_ip(), $event['field1']);
 			}
 			myadmin_log(self::$module, 'info', 'Response: '.json_encode($response), __LINE__, __FILE__);
 			$serviceExtra = $response['mainKeyNumber'].','.$response['productKey'];
-			$license->set_extra($serviceExtra)->save();
+			$serviceClass->set_extra($serviceExtra)->save();
 			$event->stopPropagation();
 		}
 	}
 
 	public static function getDeactivate(GenericEvent $event) {
-		$license = $event->getSubject();
+		$serviceClass = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
 			myadmin_log(self::$module, 'info', 'Parallels Deactivation', __LINE__, __FILE__);
 			function_requirements('deactivate_parallels');
-			deactivate_parallels($license->get_ip());
+			deactivate_parallels($serviceClass->get_ip());
 			$event->stopPropagation();
 		}
 	}
 
 	public static function getChangeIp(GenericEvent $event) {
 		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
-			$license = $event->getSubject();
+			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$parallels = new \Parallels(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
-			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$license->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
-			$result = $parallels->editIp($license->get_ip(), $event['newip']);
+			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$serviceClass->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
+			$result = $parallels->editIp($serviceClass->get_ip(), $event['newip']);
 			if (isset($result['faultcode'])) {
-				myadmin_log(self::$module, 'error', 'Parallels editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
+				myadmin_log(self::$module, 'error', 'Parallels editIp('.$serviceClass->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
 				$event['status'] = 'error';
 				$event['status_text'] = 'Error Code '.$result['faultcode'].': '.$result['fault'];
 			} else {
-				$GLOBALS['tf']->history->add($settings['TABLE'], 'change_ip', $event['newip'], $license->get_ip());
-				$license->set_ip($event['newip'])->save();
+				$GLOBALS['tf']->history->add($settings['TABLE'], 'change_ip', $event['newip'], $serviceClass->get_ip());
+				$serviceClass->set_ip($event['newip'])->save();
 				$event['status'] = 'ok';
 				$event['status_text'] = 'The IP Address has been changed.';
 			}
