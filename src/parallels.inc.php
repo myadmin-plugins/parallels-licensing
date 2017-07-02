@@ -28,7 +28,6 @@ function activate_parallels($ipAddress, $type, $addons = '') {
 	myadmin_log('licenses', 'info', "Parallels New License $ipAddress Type $type Addons $addons called", __LINE__, __FILE__);
 	ini_set('max_execution_time', 1000); // just put a lot of time
 	ini_set('default_socket_timeout', 1000); // same
-	$db = get_module_db('licenses');
 	$parallels = new \Detain\Parallels\Parallels();
 	if (trim($addons) == '')
 		$addonsArray = [];

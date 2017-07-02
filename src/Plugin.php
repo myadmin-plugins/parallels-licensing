@@ -75,13 +75,6 @@ class Plugin {
 		}
 	}
 
-	public static function getMenu(GenericEvent $event) {
-		$menu = $event->getSubject();
-		if ($GLOBALS['tf']->ima == 'admin') {
-			//$menu->add_link(self::$module.'api', 'choice=none.parallels_licenses_list', 'whm/createacct.gif', 'List all Parallels Licenses');
-		}
-	}
-
 	public static function getRequirements(GenericEvent $event) {
 		$loader = $event->getSubject();
 		$loader->add_requirement('class.Parallels', '/../vendor/detain/parallels-licensing/src/Parallels.php');
