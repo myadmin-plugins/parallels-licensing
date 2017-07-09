@@ -3,7 +3,6 @@
  * Parallels Related Functionality
  * Last Changed: $LastChangedDate: 2017-05-25 20:32:57 -0400 (Thu, 25 May 2017) $
  * @author detain
- * @version $Revision: 24796 $
  * @copyright 2017
  * @package MyAdmin
  * @category Licenses
