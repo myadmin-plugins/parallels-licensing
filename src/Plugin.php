@@ -30,7 +30,7 @@ class Plugin {
 
 	public static function getActivate(GenericEvent $event) {
 		$serviceClass = $event->getSubject();
-		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
+		if ($event['category'] == get_service_define('PARALLELS')) {
 			myadmin_log(self::$module, 'info', 'Parallels Activation', __LINE__, __FILE__);
 			function_requirements('activate_parallels');
 			if (trim($event['field2']) != '') {
@@ -47,7 +47,7 @@ class Plugin {
 
 	public static function getDeactivate(GenericEvent $event) {
 		$serviceClass = $event->getSubject();
-		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
+		if ($event['category'] == get_service_define('PARALLELS')) {
 			myadmin_log(self::$module, 'info', 'Parallels Deactivation', __LINE__, __FILE__);
 			function_requirements('deactivate_parallels');
 			deactivate_parallels($serviceClass->getIp());
@@ -56,7 +56,7 @@ class Plugin {
 	}
 
 	public static function getChangeIp(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_PARALLELS) {
+		if ($event['category'] == get_service_define('PARALLELS')) {
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$parallels = new \Parallels(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
