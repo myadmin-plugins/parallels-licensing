@@ -8,6 +8,6 @@ require_once(__DIR__.'/../../../../include/functions.inc.php');
 $key = 'PLSK.03117920.0000';
 $ipAddress = '206.72.205.242';
 $ka = new \Detain\Parallels\Parallels();
-print_r($ka->getKeyNumbers(array($ipAddress)));
+print_r($ka->getKeyNumbers([$ipAddress]));
 
 //$GLOBALS['tf']->session->destroy();

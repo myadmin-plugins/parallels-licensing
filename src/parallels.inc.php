@@ -36,7 +36,7 @@ function activate_parallels($ipAddress, $type, $addons = '') {
 	// check if already active
 	myadmin_log('licenses', 'info', 'addonsArray:', __LINE__, __FILE__);
 	myadmin_log('licenses', 'info', var_export($addonsArray, TRUE), __LINE__, __FILE__);
-	$request = array($type, $addonsArray, $ipAddress);
+	$request = [$type, $addonsArray, $ipAddress];
 	$response = $parallels->createKey($type, $addonsArray, $ipAddress);
 	request_log('licenses', FALSE, __FUNCTION__, 'parallels', 'createKey', $request, $response);
 	myadmin_log('licenses', 'info', "activate Parallels({$ipAddress}, {$type}, {$addons}) Response: ".json_encode($response), __LINE__, __FILE__);
