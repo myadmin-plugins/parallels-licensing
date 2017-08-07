@@ -2,7 +2,7 @@
 
 namespace Detain\MyAdminParallels;
 
-//use Detain\Parallels\Parallels;
+use Detain\Parallels\Parallels;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 /**
