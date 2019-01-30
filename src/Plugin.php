@@ -56,7 +56,10 @@ class Plugin
 			}
 			myadmin_log(self::$module, 'info', 'Response: '.json_encode($response), __LINE__, __FILE__);
 			$serviceExtra = $response['mainKeyNumber'].','.$response['productKey'];
-			$serviceClass->set_extra($serviceExtra)->save();
+            $serviceClass
+                ->setKey($response['mainKeyNumber'])
+                ->setExtra($serviceExtra)
+                ->save;
 			$event->stopPropagation();
 		}
 	}
