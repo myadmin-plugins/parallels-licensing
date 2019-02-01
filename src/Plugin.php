@@ -59,7 +59,7 @@ class Plugin
             $serviceClass
                 ->setKey($response['mainKeyNumber'])
                 ->setExtra($serviceExtra)
-                ->save;
+                ->save();
 			$event->stopPropagation();
 		}
 	}
