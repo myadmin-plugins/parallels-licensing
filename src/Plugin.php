@@ -47,14 +47,14 @@ class Plugin
 	{
 		$serviceClass = $event->getSubject();
 		if ($event['category'] == get_service_define('PARALLELS')) {
-			myadmin_log(self::$module, 'info', 'Parallels Activation', __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'Parallels Activation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			function_requirements('activate_parallels');
 			if (trim($event['field2']) != '') {
 				$response = activate_parallels($serviceClass->getIp(), $event['field1'], $event['field2']);
 			} else {
 				$response = activate_parallels($serviceClass->getIp(), $event['field1']);
 			}
-			myadmin_log(self::$module, 'info', 'Response: '.json_encode($response), __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'Response: '.json_encode($response), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$serviceExtra = $response['mainKeyNumber'].','.$response['productKey'];
             $serviceClass
                 ->setKey($response['mainKeyNumber'])
@@ -71,7 +71,7 @@ class Plugin
 	{
 		$serviceClass = $event->getSubject();
 		if ($event['category'] == get_service_define('PARALLELS')) {
-			myadmin_log(self::$module, 'info', 'Parallels Deactivation', __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'Parallels Deactivation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			function_requirements('deactivate_parallels');
 			deactivate_parallels($serviceClass->getIp());
 			$event->stopPropagation();
@@ -87,7 +87,7 @@ class Plugin
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$parallels = new \Parallels(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
-			myadmin_log(self::$module, 'info', 'IP Change - (OLD:'.$serviceClass->getIp().") (NEW:{$event['newip']})", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'IP Change - (OLD:'.$serviceClass->getIp().") (NEW:{$event['newip']})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$result = $parallels->editIp($serviceClass->getIp(), $event['newip']);
 			if (isset($result['faultcode'])) {
 				myadmin_log(self::$module, 'error', 'Parallels editIp('.$serviceClass->getIp().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__, self::$module);
