@@ -56,10 +56,10 @@ class Plugin
 			}
 			myadmin_log(self::$module, 'info', 'Response: '.json_encode($response), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$serviceExtra = $response['mainKeyNumber'].','.$response['productKey'];
-            $serviceClass
-                ->setKey($response['mainKeyNumber'])
-                ->setExtra($serviceExtra)
-                ->save();
+			$serviceClass
+				->setKey($response['mainKeyNumber'])
+				->setExtra($serviceExtra)
+				->save();
 			$event->stopPropagation();
 		}
 	}
@@ -108,10 +108,10 @@ class Plugin
 	 */
 	public static function getRequirements(GenericEvent $event)
 	{
-        /**
-         * @var \MyAdmin\Plugins\Loader $this->loader
-         */
-        $loader = $event->getSubject();
+		/**
+		 * @var \MyAdmin\Plugins\Loader $this->loader
+		 */
+		$loader = $event->getSubject();
 		$loader->add_requirement('class.Parallels', '/../vendor/detain/parallels-licensing/src/Parallels.php', '\\Detain\\Parallels\\');
 		$loader->add_requirement('activate_parallels', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
 		$loader->add_requirement('deactivate_parallels', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
@@ -120,12 +120,12 @@ class Plugin
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-    public static function getSettings(GenericEvent $event)
-    {
-        /**
-         * @var \MyAdmin\Settings $settings
-         **/
-        $settings = $event->getSubject();
+	public static function getSettings(GenericEvent $event)
+	{
+		/**
+		 * @var \MyAdmin\Settings $settings
+		 **/
+		$settings = $event->getSubject();
 		$settings->add_text_setting(self::$module, _('Parallels'), 'parallels_ka_client', _('Parallels KA Client'), _('Parallels KA Client'), $settings->get_setting('PARALLELS_KA_CLIENT'));
 		$settings->add_text_setting(self::$module, _('Parallels'), 'parallels_ka_login', _('Parallels KA Login'), _('Parallels KA Login'), $settings->get_setting('PARALLELS_KA_LOGIN'));
 		$settings->add_text_setting(self::$module, _('Parallels'), 'parallels_ka_password', _('Parallels KA Password'), _('Parallels KA Password'), $settings->get_setting('PARALLELS_KA_PASSWORD'));
