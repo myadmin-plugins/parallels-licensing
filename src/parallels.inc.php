@@ -24,7 +24,7 @@
 function activate_parallels($ipAddress, $type, $addons = '')
 {
 	function_requirements('class.Parallels');
-	myadmin_log('licenses', 'info', "Parallels New License $ipAddress Type $type Addons $addons called", __LINE__, __FILE__);
+	myadmin_log('licenses', 'info', "Parallels New License {$ipAddress} Type {$type} Addons {$addons} called", __LINE__, __FILE__);
 	ini_set('max_execution_time', 1000); // just put a lot of time
 	ini_set('default_socket_timeout', 1000); // same
 	$parallels = new \Detain\Parallels\Parallels();
