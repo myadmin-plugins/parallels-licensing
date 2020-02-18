@@ -38,9 +38,14 @@ function activate_parallels($ipAddress, $type, $addons = '')
 	myadmin_log('licenses', 'info', 'addonsArray:', __LINE__, __FILE__);
 	myadmin_log('licenses', 'info', var_export($addonsArray, true), __LINE__, __FILE__);
 	$request = [$type, $addonsArray, $ipAddress];
-	$response = $parallels->createKey($type, $addonsArray, $ipAddress);
-	request_log('licenses', false, __FUNCTION__, 'parallels', 'createKey', $request, $response);
-	myadmin_log('licenses', 'info', "activate Parallels({$ipAddress}, {$type}, {$addons}) Response: ".json_encode($response), __LINE__, __FILE__);
+	try {
+		$response = $parallels->createKey($type, $addonsArray, $ipAddress);
+		request_log('licenses', false, __FUNCTION__, 'parallels', 'createKey', $request, $response);
+		myadmin_log('licenses', 'info', "activate Parallels({$ipAddress}, {$type}, {$addons}) Response: ".json_encode($response), __LINE__, __FILE__);
+	} catch (\XML_RPC2_CurlException  $e) {
+		request_log('licenses', false, __FUNCTION__, 'parallels', 'createKey', $request, $e->getMessage());
+		return false;
+	}
 	/* example response:
 	Array(
 	[mainKeyNumber] => PLSK.00007677.0000
