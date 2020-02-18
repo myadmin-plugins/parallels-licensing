@@ -78,26 +78,32 @@ function deactivate_parallels($ipAddress)
 	myadmin_log('licenses', 'info', "Parallels Deactivation ({$ipAddress})", __LINE__, __FILE__);
 	function_requirements('class.Parallels');
 	$parallels = new \Detain\Parallels\Parallels();
-	$response = $parallels->getKeyNumbers($ipAddress);
-	request_log('licenses', false, __FUNCTION__, 'parallels', 'getMainKeyFromIp', $ipAddress, $response);
-	myadmin_log('licenses', 'info', "Parallels getMainKeyFromIp({$ipAddress}): ".json_encode($response), __LINE__, __FILE__);
-    if (isset($response['keyNumbers'])) {
-        $keys = $response['keyNumbers']; 
-        $status = json_decode(file_get_contents(__DIR__.'/../../../../include/config/plesk.json'), true);
-        foreach ($keys as $key) {
-		    $response = $parallels->terminateKey($key);
-            request_log('licenses', false, __FUNCTION__, 'parallels', 'terminateKey', $key, $response);
-            myadmin_log('licenses', 'info', "Parallels TerminateKey({$key}) Response: ".json_encode($response), __LINE__, __FILE__);
-            if (array_key_exists($key, $status)) {
-                $status[$key]['terminated'] = true;
-                file_put_contents(__DIR__.'/../../../../include/config/plesk.json', json_encode($status, JSON_PRETTY_PRINT));
-            }
-            if (array_key_exists(str_replace('0001', '0000', $key), $status)) {
-                $status[str_replace('0001', '0000', $key)]['terminated'] = true;
-                file_put_contents(__DIR__.'/../../../../include/config/plesk.json', json_encode($status, JSON_PRETTY_PRINT));
-            }
-        }
+	try {
+		$response = $parallels->getKeyNumbers($ipAddress);
+		request_log('licenses', false, __FUNCTION__, 'parallels', 'getMainKeyFromIp', $ipAddress, $response);
+		myadmin_log('licenses', 'info', "Parallels getMainKeyFromIp({$ipAddress}): ".json_encode($response), __LINE__, __FILE__);
+	} catch (\XML_RPC2_CurlException  $e) {
+		request_log('licenses', false, __FUNCTION__, 'parallels', 'getMainKeyFromIp', $ipAddress, $e->getMessage());
+		return false;
+	}
+	if (isset($response['keyNumbers'])) {
+		$keys = $response['keyNumbers']; 
+		$status = json_decode(file_get_contents(__DIR__.'/../../../../include/config/plesk.json'), true);
+		foreach ($keys as $key) {
+			$response = $parallels->terminateKey($key);
+			request_log('licenses', false, __FUNCTION__, 'parallels', 'terminateKey', $key, $response);
+			myadmin_log('licenses', 'info', "Parallels TerminateKey({$key}) Response: ".json_encode($response), __LINE__, __FILE__);
+			if (array_key_exists($key, $status)) {
+				$status[$key]['terminated'] = true;
+				file_put_contents(__DIR__.'/../../../../include/config/plesk.json', json_encode($status, JSON_PRETTY_PRINT));
+			}
+			if (array_key_exists(str_replace('0001', '0000', $key), $status)) {
+				$status[str_replace('0001', '0000', $key)]['terminated'] = true;
+				file_put_contents(__DIR__.'/../../../../include/config/plesk.json', json_encode($status, JSON_PRETTY_PRINT));
+			}
+		}
 	} else {
 		myadmin_log('licenses', 'info', 'Parallels No Key Found to Terminate', __LINE__, __FILE__);
 	}
+	return true;
 }
