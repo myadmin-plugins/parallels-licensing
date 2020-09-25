@@ -106,6 +106,18 @@ function deactivate_parallels($ipAddress)
 				$status[str_replace('0001', '0000', $key)]['terminated'] = true;
 				file_put_contents(__DIR__.'/../../../../include/config/plesk.json', json_encode($status, JSON_PRETTY_PRINT));
 			}
+			if (!isset($status[$key]['terminated'])  || !$status[$key]['terminated']) {
+				$bodyRows = [];
+				$bodyRows[] = 'License IP: '.$ipAddress.' unable to deactivate.';
+				$bodyRows[] = 'License Key: '.$key;
+				$bodyRows[] = 'Deactivation Response: .'.json_encode($response);
+				$subject = 'Parallels License Deactivation Issue IP: '.$ipAddress;
+				$smartyE = new TFSmarty;
+				$smartyE->assign('h1', 'Parallels License Deactivation');
+				$smartyE->assign('body_rows', $bodyRows);
+				$msg = $smartyE->fetch('email/client/client_email.tpl');
+				(new \MyAdmin\Mail())->multiMail($subject, $msg, ADMIN_EMAIL, 'client/client_email.tpl');
+			}
 		}
 	} else {
 		myadmin_log('licenses', 'info', 'Parallels No Key Found to Terminate', __LINE__, __FILE__);
