@@ -75,6 +75,7 @@ function activate_parallels($ipAddress, $type, $addons = '')
 	return $response;
 }
 
+
 /**
 * @param $ipAddress
 */
@@ -92,35 +93,49 @@ function deactivate_parallels($ipAddress)
 		return false;
 	}
 	if (isset($response['keyNumbers'])) {
-		$keys = $response['keyNumbers']; 
-		$status = json_decode(file_get_contents(__DIR__.'/../../../../include/config/plesk.json'), true);
+		$keys = $response['keyNumbers'];
 		foreach ($keys as $key) {
-			$response = $parallels->terminateKey($key);
-			request_log('licenses', false, __FUNCTION__, 'parallels', 'terminateKey', $key, $response);
-			myadmin_log('licenses', 'info', "Parallels TerminateKey({$key}) Response: ".json_encode($response), __LINE__, __FILE__);
-			if (array_key_exists($key, $status)) {
-				$status[$key]['terminated'] = true;
-				file_put_contents(__DIR__.'/../../../../include/config/plesk.json', json_encode($status, JSON_PRETTY_PRINT));
-			}
-			if (array_key_exists(str_replace('0001', '0000', $key), $status)) {
-				$status[str_replace('0001', '0000', $key)]['terminated'] = true;
-				file_put_contents(__DIR__.'/../../../../include/config/plesk.json', json_encode($status, JSON_PRETTY_PRINT));
-			}
-			if (!isset($status[$key]['terminated'])  || !$status[$key]['terminated']) {
-				$bodyRows = [];
-				$bodyRows[] = 'License IP: '.$ipAddress.' unable to deactivate.';
-				$bodyRows[] = 'License Key: '.$key;
-				$bodyRows[] = 'Deactivation Response: .'.json_encode($response);
-				$subject = 'Parallels License Deactivation Issue IP: '.$ipAddress;
-				$smartyE = new TFSmarty;
-				$smartyE->assign('h1', 'Parallels License Deactivation');
-				$smartyE->assign('body_rows', $bodyRows);
-				$msg = $smartyE->fetch('email/client/client_email.tpl');
-				(new \MyAdmin\Mail())->adminMail($subject, $msg, false, 'client/client_email.tpl');
-			}
+			deactivate_parallels_by_key($key);
 		}
 	} else {
 		myadmin_log('licenses', 'info', 'Parallels No Key Found to Terminate', __LINE__, __FILE__);
+	}
+	return true;
+}
+
+/**
+* @param $ipAddress
+*/
+function deactivate_parallels_by_key($key)
+{
+	myadmin_log('licenses', 'info', "Parallels Deactivation ({$key})", __LINE__, __FILE__);
+	function_requirements('class.Parallels');
+	$parallels = new \Detain\Parallels\Parallels();
+	$status = json_decode(file_get_contents(__DIR__.'/../../../../include/config/plesk.json'), true);
+	if (count(explode('.', $key)) > 2)
+		$key = substr($key, 0, strrpos($key, '.'));
+	$response = $parallels->terminateKey($key);
+
+	request_log('licenses', false, __FUNCTION__, 'parallels', 'terminateKey', $key, $response);
+	myadmin_log('licenses', 'info', "Parallels TerminateKey({$key}) Response: ".json_encode($response), __LINE__, __FILE__);
+	if (array_key_exists($key, $status)) {
+		$status[$key]['terminated'] = true;
+		file_put_contents(__DIR__.'/../../../../include/config/plesk.json', json_encode($status, JSON_PRETTY_PRINT));
+	}
+	if (array_key_exists(str_replace('0001', '0000', $key), $status)) {
+		$status[str_replace('0001', '0000', $key)]['terminated'] = true;
+		file_put_contents(__DIR__.'/../../../../include/config/plesk.json', json_encode($status, JSON_PRETTY_PRINT));
+	}
+	if (!isset($status[$key]['terminated'])  || !$status[$key]['terminated']) {
+		$bodyRows = [];
+		$bodyRows[] = 'License Key: '.$key.' unable to deactivate.';
+		$bodyRows[] = 'Deactivation Response: .'.json_encode($response);
+		$subject = 'Parallels License Deactivation Issue Key: '.$key;
+		$smartyE = new TFSmarty;
+		$smartyE->assign('h1', 'Parallels License Deactivation');
+		$smartyE->assign('body_rows', $bodyRows);
+		$msg = $smartyE->fetch('email/client/client_email.tpl');
+		(new \MyAdmin\Mail())->adminMail($subject, $msg, false, 'client/client_email.tpl');
 	}
 	return true;
 }

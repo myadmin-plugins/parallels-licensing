@@ -36,6 +36,7 @@ class Plugin
 			self::$module.'.reactivate' => [__CLASS__, 'getActivate'],
 			self::$module.'.deactivate' => [__CLASS__, 'getDeactivate'],
 			self::$module.'.deactivate_ip' => [__CLASS__, 'getDeactivate'],
+			self::$module.'.deactivate_key' => [__CLASS__, 'getDeactivateKey'],
 			'function.requirements' => [__CLASS__, 'getRequirements']
 		];
 	}
@@ -68,6 +69,20 @@ class Plugin
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
 	public static function getDeactivate(GenericEvent $event)
+	{
+		$serviceClass = $event->getSubject();
+		if ($event['category'] == get_service_define('PARALLELS')) {
+			myadmin_log(self::$module, 'info', 'Parallels Deactivation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
+			function_requirements('deactivate_parallels');
+			$event['success'] = deactivate_parallels($serviceClass->getIp());
+			$event->stopPropagation();
+		}
+	}
+
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
+	public static function getDeactivateKey(GenericEvent $event)
 	{
 		$serviceClass = $event->getSubject();
 		if ($event['category'] == get_service_define('PARALLELS')) {
@@ -115,6 +130,7 @@ class Plugin
 		$loader->add_requirement('class.Parallels', '/../vendor/detain/parallels-licensing/src/Parallels.php', '\\Detain\\Parallels\\');
 		$loader->add_requirement('activate_parallels', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
 		$loader->add_requirement('deactivate_parallels', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
+		$loader->add_requirement('deactivate_parallels_by_key', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
 	}
 
 	/**
