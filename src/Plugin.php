@@ -88,7 +88,7 @@ class Plugin
 		if ($event['category'] == get_service_define('PARALLELS')) {
 			myadmin_log(self::$module, 'info', 'Parallels Deactivation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			function_requirements('deactivate_parallels');
-			$event['success'] = deactivate_parallels($serviceClass->getIp());
+			$event['success'] = deactivate_parallels_by_key($serviceClass->getKey());
 			$event->stopPropagation();
 		}
 	}
