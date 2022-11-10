@@ -144,7 +144,7 @@ class Plugin
         $settings = $event->getSubject();
         $settings->add_text_setting(self::$module, _('Parallels'), 'parallels_ka_client', _('Parallels KA Client'), _('Parallels KA Client'), $settings->get_setting('PARALLELS_KA_CLIENT'));
         $settings->add_text_setting(self::$module, _('Parallels'), 'parallels_ka_login', _('Parallels KA Login'), _('Parallels KA Login'), $settings->get_setting('PARALLELS_KA_LOGIN'));
-        $settings->add_text_setting(self::$module, _('Parallels'), 'parallels_ka_password', _('Parallels KA Password'), _('Parallels KA Password'), $settings->get_setting('PARALLELS_KA_PASSWORD'));
+        $settings->add_password_setting(self::$module, _('Parallels'), 'parallels_ka_password', _('Parallels KA Password'), _('Parallels KA Password'), $settings->get_setting('PARALLELS_KA_PASSWORD'));
         $settings->add_text_setting(self::$module, _('Parallels'), 'parallels_ka_url', _('Parallels KA URL'), _('Parallels KA URL'), $settings->get_setting('PARALLELS_KA_URL'));
         $settings->add_dropdown_setting(self::$module, _('Parallels'), 'outofstock_licenses_parallels', _('Out Of Stock Parallels Licenses'), _('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), ['0', '1'], ['No', 'Yes']);
     }
