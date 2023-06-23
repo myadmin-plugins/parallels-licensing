@@ -127,7 +127,7 @@ class Plugin
          * @var \MyAdmin\Plugins\Loader $this->loader
          */
         $loader = $event->getSubject();
-        $loader->add_requirement('class.Parallels', '/../vendor/detain/parallels-licensing/src/Parallels.php', '\\Detain\\Parallels\\');
+//        $loader->add_requirement('class.Parallels', '/../vendor/detain/parallels-licensing/src/Parallels.php', '\\Detain\\Parallels\\');
         $loader->add_requirement('activate_parallels', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
         $loader->add_requirement('deactivate_parallels', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');
         $loader->add_requirement('deactivate_parallels_by_key', '/../vendor/detain/myadmin-parallels-licensing/src/parallels.inc.php');

@@ -7,6 +7,8 @@
  * @category Licenses
  */
 
+use \Detain\Parallels\Parallels;
+
 /**
  * get_parallels_licenses()
  * simple wrapper to get all the parallels licenses.
@@ -23,7 +25,6 @@
  */
 function activate_parallels($ipAddress, $type, $addons = '')
 {
-    function_requirements('class.Parallels');
     myadmin_log('licenses', 'info', "Parallels New License {$ipAddress} Type {$type} Addons {$addons} called", __LINE__, __FILE__);
     ini_set('max_execution_time', 1000); // just put a lot of time
     ini_set('default_socket_timeout', 1000); // same
@@ -82,7 +83,6 @@ function activate_parallels($ipAddress, $type, $addons = '')
 function deactivate_parallels($ipAddress)
 {
     myadmin_log('licenses', 'info', "Parallels Deactivation ({$ipAddress})", __LINE__, __FILE__);
-    function_requirements('class.Parallels');
     $parallels = new \Detain\Parallels\Parallels();
     try {
         $response = $parallels->getKeyNumbers($ipAddress);
@@ -109,7 +109,6 @@ function deactivate_parallels($ipAddress)
 function deactivate_parallels_by_key($key)
 {
     myadmin_log('licenses', 'info', "Parallels Deactivation ({$key})", __LINE__, __FILE__);
-    function_requirements('class.Parallels');
     $parallels = new \Detain\Parallels\Parallels();
     $status = json_decode(file_get_contents(__DIR__.'/../../../../include/config/plesk.json'), true);
     if (count(explode('.', $key)) > 2) {
