@@ -1,9 +1,13 @@
 {
 	"name": "detain/myadmin-parallels-licensing",
 	"type": "myadmin-plugin",
-	"description": "Parallels Licensing Class",
+	"description": "MyAdmin Parallels Licensing Plugin - Provides Parallels Plesk and Virtuozzo license provisioning, activation, deactivation, and IP management integration for the MyAdmin control panel.",
 	"keywords": [
 		"parallels",
+		"plesk",
+		"licensing",
+		"myadmin",
+		"plugin",
 		"administration",
 		"license"
 	],
@@ -11,31 +15,31 @@
 	"authors": [
 		{
 			"name": "Joe Huss",
-			"homepage": "https:\/\/my.interserver.net\/"
+			"homepage": "https://my.interserver.net/"
 		}
 	],
 	"config": {
-		"bin-dir": "vendor\/bin",
+		"bin-dir": "vendor/bin",
 		"minimum-stability": "dev"
 	},
 	"require": {
-		"php": ">=5.0.0",
+		"php": ">=8.2",
 		"ext-soap": "*",
 		"symfony/event-dispatcher": "^5.0@stable",
 		"detain/myadmin-plugin-installer": "dev-master",
 		"detain/parallels-licensing": "*"
-    },
+	},
 	"require-dev": {
-		"phpunit/phpunit": "*",
-		"phpunit/phpunit-mock-objects": "*",
-		"vlucas/phpdotenv": "*",
-		"codeclimate/php-test-reporter": "*",
-		"satooshi/php-coveralls": "*",
-		"codacy/coverage": "*"
+		"phpunit/phpunit": "^9.6"
 	},
 	"autoload": {
 		"psr-4": {
 			"Detain\\MyAdminParallels\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Detain\\MyAdminParallels\\Tests\\": "tests/"
 		}
 	}
 }
