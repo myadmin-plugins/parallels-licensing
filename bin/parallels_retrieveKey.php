@@ -2,8 +2,8 @@
 <?php
 
 require_once __DIR__.'/../../../../include/functions.inc.php';
-//$GLOBALS['tf']->session->create(160308,'services');
-//$GLOBALS['tf']->session->verify();
+//\MyAdmin\App::session()->create(160308,'services');
+//\MyAdmin\App::session()->verify();
 
 $key = 'PLSK.03117920.0000';
 $ipAddress = '206.72.205.242';
@@ -11,4 +11,4 @@ $ka = new \Detain\Parallels\Parallels();
 print_r($ka->retrieveKey($key));
 
 
-//$GLOBALS['tf']->session->destroy();
+//\MyAdmin\App::session()->destroy();
