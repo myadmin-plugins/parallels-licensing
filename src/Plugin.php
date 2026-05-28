@@ -56,11 +56,18 @@ class Plugin
                 $response = activate_parallels($serviceClass->getIp(), $event['field1']);
             }
             myadmin_log(self::$module, 'info', 'Response: '.json_encode($response), __LINE__, __FILE__, self::$module, $serviceClass->getId());
-            $serviceExtra = $response['mainKeyNumber'].','.$response['productKey'];
-            $serviceClass
-                ->setKey($response['mainKeyNumber'])
-                ->setExtra($serviceExtra)
-                ->save();
+            if ($response === false || !is_array($response) || empty($response['mainKeyNumber']) || empty($response['productKey'])) {
+                $event['success'] = false;
+                $errText = is_array($response) ? json_encode($response) : var_export($response, true);
+                myadmin_log(self::$module, 'error', 'Parallels activate_parallels failed for IP '.$serviceClass->getIp().' Response: '.$errText, __LINE__, __FILE__, self::$module, $serviceClass->getId());
+                chatNotify('Failed [License '.$serviceClass->getId().'](https://my.interserver.net/admin/view_service?id='.$serviceClass->getId().'&module=licenses) Parallels Activation IP:'.$serviceClass->getIp().' Type:'.$event['field1'].' Addons:'.$event['field2'].' - '.$errText, 'notifications');
+            } else {
+                $serviceExtra = $response['mainKeyNumber'].','.$response['productKey'];
+                $serviceClass
+                    ->setKey($response['mainKeyNumber'])
+                    ->setExtra($serviceExtra)
+                    ->save();
+            }
             $event->stopPropagation();
         }
     }
