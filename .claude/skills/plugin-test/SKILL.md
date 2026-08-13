@@ -1,6 +1,6 @@
 ---
 name: plugin-test
-description: Writes PHPUnit tests in `tests/` using the stub pattern from `tests/bootstrap.php`. Use when user says 'add test', 'test this function', 'write phpunit', 'cover this', or modifies `src/Plugin.php` or `src/parallels.inc.php`. Covers Plugin static properties/hooks via ReflectionClass and inc function signatures via ReflectionFunction. Do NOT use for integration tests that call live KA API or external services. NOTE: for a plugin's contract/behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
+description: Writes PHPUnit tests in `tests/` using the stub pattern from `tests/bootstrap.php`. Use when user says 'add test', 'test this function', 'write phpunit', 'cover this', or modifies `src/Plugin.php` or `src/parallels.inc.php`. Covers Plugin static properties/hooks via ReflectionClass and inc function signatures via ReflectionFunction. Do NOT use for integration tests that call live KA API or external services. For a plugin's contract or behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
 ---
 <!-- myadmin-contract-harness-notice -->
 > ### ⚠️ Read this before the rest of the file

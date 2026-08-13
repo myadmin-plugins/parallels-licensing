@@ -1,6 +1,6 @@
 ---
 name: inc-function
-description: Adds a new procedural function to `src/parallels.inc.php` wrapping a `\Detain\Parallels\Parallels` KA API method with the standard `myadmin_log` + `request_log` + try/catch pattern. Use when user says 'add function', 'new API call', 'call parallels method', or needs to expose a KA API method. Do NOT use for Plugin.php static event handlers or bin/ scripts. NOTE: for a plugin's contract/behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
+description: Adds a new procedural function to `src/parallels.inc.php` wrapping a `\Detain\Parallels\Parallels` KA API method with the standard `myadmin_log` + `request_log` + try/catch pattern. Use when user says 'add function', 'new API call', 'call parallels method', or needs to expose a KA API method. Do NOT use for Plugin.php static event handlers or bin/ scripts. For a plugin's contract or behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
 ---
 <!-- myadmin-contract-harness-notice -->
 > ### ⚠️ Read this before the rest of the file
